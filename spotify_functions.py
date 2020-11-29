@@ -11,13 +11,18 @@ def login():
     return sp
 
 
-def search(sp, query_str, limit):
+def top_10_playlists(sp, query_str, limit):
     results = sp.search(q=query_str, limit=limit, type='playlist')
-    pp.pprint(results)
-    # for idx, track in enumerate(results['tracks']['items']):
-    #     print(idx, track['name'])
+    # pp.pprint(results)
+    playlists = results['playlists']['items']
+    details = playlists[0].keys()
+    print(details)
+    for playlist_details in playlists:
+        tracks = sp.playlist(playlist_details['id'], fields="tracks")
+        print(tracks)
+        input("continuar ")
 
 if __name__ == '__main__':
     sp = login()
 
-    search(sp, 'faxina', 1)
+    top_10_playlists(sp, 'faxina', 1)
